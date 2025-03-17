@@ -1,9 +1,28 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+
+  const profileMenuRef = useRef(null); // Ref for the profile menu button
+  const profileDropdownRef = useRef(null); // Ref for the profile dropdown menu
+
+  // Close profile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        profileDropdownRef.current &&
+        !profileDropdownRef.current.contains(event.target) &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
+        setProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -15,22 +34,6 @@ export default function App() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.target.closest("#profile-menu")) {
-        setProfileOpen(false);
-      }
-    };
-
-    if (profileOpen) {
-      document.addEventListener("click", handleClickOutside);
-    } else {
-      document.removeEventListener("click", handleClickOutside);
-    }
-
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, [profileOpen]);
 
   return (
     <nav className="bg-gray-800">
@@ -79,8 +82,9 @@ export default function App() {
             </button>
 
             {/* Profile dropdown */}
-            <div className="relative ml-3" id="profile-menu">
+            <div className="relative ml-3">
               <button
+                ref={profileMenuRef} // Attach ref to the profile menu button
                 type="button"
                 className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 onClick={() => setProfileOpen(!profileOpen)}
@@ -89,46 +93,71 @@ export default function App() {
                 <img className="size-8 rounded-full" src="/BV.png" alt="" />
               </button>
 
-              <AnimatePresence>
-                {profileOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5"
-                  >
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700">Your Profile</a>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700">Settings</a>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700">Sign out</a>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* Profile dropdown with Framer Motion animation */}
+              {profileOpen && (
+                <motion.div
+                  ref={profileDropdownRef} // Attach ref to the dropdown menu
+                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5"
+                  initial={{ opacity: 0, translateY: -10 }}
+                  animate={{ opacity: 1, translateY: 0 }}
+                  exit={{ opacity: 0, translateY: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">Your Profile</a>
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">Settings</a>
+                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">Sign out</a>
+                </motion.div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu with animation */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="sm:hidden"
-            id="mobile-menu"
+      {/* Mobile menu with Framer Motion animation */}
+      <motion.div
+        className="sm:hidden"
+        id="mobile-menu"
+        initial={{ height: 0, opacity: 0 }}
+        animate={{
+          height: menuOpen ? "auto" : 0,
+          opacity: menuOpen ? 1 : 0
+        }}
+        exit={{ height: 0, opacity: 0 }}
+        transition={{ duration: 0.2 }}
+      >
+        {/* First animate the background of the menu */}
+        <motion.div
+          className="space-y-1 px-2 pt-2 pb-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: menuOpen ? 1 : 0 }}
+          transition={{ duration: 0.3, delay: 0.15 }}
+        >
+          <a
+            href="#"
+            className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
           >
-            <div className="space-y-1 px-2 pt-2 pb-3">
-              <a href="#" className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Dashboard</a>
-              <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
-              <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
-              <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            Dashboard
+          </a>
+          <a
+            href="#"
+            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+          >
+            Team
+          </a>
+          <a
+            href="#"
+            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+          >
+            Projects
+          </a>
+          <a
+            href="#"
+            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+          >
+            Calendar
+          </a>
+        </motion.div>
+      </motion.div>
     </nav>
   );
 }
