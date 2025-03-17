@@ -36,7 +36,7 @@ export default function App() {
   }, []);
 
   return (
-    <nav className="bg-gray-800">
+    <nav className="bg-gray-900">
       <div className="sm:px-6 px-4 lg:px-8">
         <div className="relative flex h-16 items-center">
 
@@ -87,8 +87,8 @@ export default function App() {
       </div>
 
       {/* Mobile menu with Framer Motion animation */}
-      <motion.div className="sm:hidden" initial={{ height: 0, opacity: 0 }} animate={{ height: menuOpen ? "auto" : 0, opacity: menuOpen ? 1 : 0 }} >
-        <motion.div className="space-y-1 px-2 pt-2 pb-3" initial={{ opacity: 0 }} animate={{ opacity: menuOpen ? 1 : 0 }} transition={{ duration: 0.3, delay: 0.15 }}>
+      <motion.div className="sm:hidden" initial={{ height: 0, opacity: 0 }} animate={{ height: menuOpen ? "auto" : 0, opacity: menuOpen ? 1 : 0 }}>
+        <motion.div className="space-y-1 px-2 pt-2 pb-3" initial={{ opacity: 0 }} animate={{ opacity: menuOpen ? 1 : 0 }} transition={{ duration: menuOpen ? 0.3 : 0.1, delay: menuOpen ? 0.15 : 0 }}>
           <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Dashboard</a>
           <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Team</a>
           <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Projects</a>
