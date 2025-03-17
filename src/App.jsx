@@ -10,29 +10,29 @@ export default function App() {
   const profileMenuRef = useRef(null);
   const profileDropdownRef = useRef(null);
 
-  // Close profile menu when clicking outside
   useEffect(() => {
+    // Close the mobile menu when resizing to desktop
+    function handleResize() {
+      if (window.innerWidth >= 640) {
+        setMenuOpen(false);
+      }
+    };
+    // Close the profile menu when clicking outside
     function handleClickOutside(e) {
       // Close the profile menu if clicked outside
       if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target) && !profileMenuRef.current.contains(e.target)) {
         setProfileOpen(false);
       }
     };
+
     // Add event listener when the component is mounted
     document.addEventListener("mousedown", handleClickOutside);
-    // Remove event listener when the component is unmounted (for performance reasons, otherwise multiple event listeners are added)
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 640) {
-        setMenuOpen(false);
-      }
-    };
-
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    // Remove event listener when the component is unmounted (for performance reasons, otherwise multiple event listeners are added)
+    return function cleanup() {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("resize", handleResize);
+    }
   }, []);
 
   return (
