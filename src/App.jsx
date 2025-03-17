@@ -1,26 +1,26 @@
-import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react"; // For state and effects
+import { motion } from "framer-motion"; // For animations
 
 export default function App() {
+  // State for the mobile menu and profile dropdown
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  const profileMenuRef = useRef(null); // Ref for the profile menu button
-  const profileDropdownRef = useRef(null); // Ref for the profile dropdown menu
+  // Keeps the state of the menus across renders
+  const profileMenuRef = useRef(null);
+  const profileDropdownRef = useRef(null);
 
   // Close profile menu when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        profileDropdownRef.current &&
-        !profileDropdownRef.current.contains(event.target) &&
-        !profileMenuRef.current.contains(event.target)
-      ) {
+    function handleClickOutside(e) {
+      // Close the profile menu if clicked outside
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target) && !profileMenuRef.current.contains(e.target)) {
         setProfileOpen(false);
       }
     };
-
+    // Add event listener when the component is mounted
     document.addEventListener("mousedown", handleClickOutside);
+    // Remove event listener when the component is unmounted (for performance reasons, otherwise multiple event listeners are added)
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
@@ -48,15 +48,38 @@ export default function App() {
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              {menuOpen ? (
-                <svg className="size-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="size-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
-              )}
+              <motion.svg
+                key={menuOpen ? "close" : "menu"} // Ensures reanimation on state change
+                className="size-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                initial={{ opacity: 0, rotate: -90, scale: 0.8 }} // Start animation
+                animate={{ opacity: 1, rotate: 0, scale: 1 }} // Animate into view
+                exit={{ opacity: 0, rotate: 90, scale: 0.8 }} // Exit animation
+                transition={{ duration: 0.3, ease: "easeInOut" }} // Smooth transition
+              >
+                {menuOpen ? (
+                  <motion.path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  />
+                ) : (
+                  <motion.path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  />
+                )}
+              </motion.svg>
             </button>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
