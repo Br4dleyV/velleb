@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react"; // For state and effects
 import { motion, AnimatePresence } from "framer-motion"; // For animations
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+import HomePage from "./pages/HomePage";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false); // Testing purposes only
@@ -83,8 +85,8 @@ export default function App() {
               </div>
             ) : (
               <div className="flex gap-2 sm:space-x-2 sm:flex-nowrap flex-shrink-0">
-                <a className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-teal-500 whitespace-nowrap" href="#">Login</a>
-                <a className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-grey-300 hover:text-teal-700 whitespace-nowrap" href="#">Register</a>
+                <a className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-teal-500 whitespace-nowrap" href="/login">Login</a>
+                <a className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-grey-300 hover:text-teal-700 whitespace-nowrap" href="/register">Register</a>
               </div>
             )}
           </div>
@@ -110,7 +112,9 @@ export default function App() {
     <main className="p-4">
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </main>
