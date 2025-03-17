@@ -65,31 +65,20 @@ export default function App() {
             </div>
           </div>
 
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            {/* Profile dropdown */}
+          {/* Profile Dropdown */}
+          <div className="absolute right-0 flex items-center ">
             <div className="relative ml-3">
-              <button
-                ref={profileMenuRef} // Attach ref to the profile menu button
-                type="button"
-                className=" relative flex rounded-full bg-gray-800 text-sm"
-                onClick={() => setProfileOpen(!profileOpen)}
-              >
-                <img className="size-8 rounded-full" src="/BV.png" alt="" />
+              {/* Profile Image */}
+              <button className="flex" onClick={() => setProfileOpen(!profileOpen)} type="button" ref={profileMenuRef}>
+                <img className="h-8 object-contain rounded-full" src="/BV.png" alt="Profile Image" />
               </button>
 
               {/* Profile dropdown with Framer Motion animation */}
               {profileOpen && (
-                <motion.div
-                  ref={profileDropdownRef} // Attach ref to the dropdown menu
-                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5"
-                  initial={{ opacity: 0, translateY: -10 }}
-                  animate={{ opacity: 1, translateY: 0 }}
-                  exit={{ opacity: 0, translateY: -10 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">Your Profile</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">Settings</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">Sign out</a>
+                <motion.div className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-white py-1 ring-1 shadow-lg ring-black/10" initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
+                  <a href="#" className="block px-4 py-2 text-sm">Your Profile</a>
+                  <a href="#" className="block px-4 py-2 text-sm">Settings</a>
+                  <a href="#" className="block px-4 py-2 text-sm">Sign out</a>
                 </motion.div>
               )}
             </div>
@@ -98,13 +87,12 @@ export default function App() {
       </div>
 
       {/* Mobile menu with Framer Motion animation */}
-      <motion.div className="sm:hidden" initial={{ height: 0, opacity: 0 }} animate={{ height: menuOpen ? "auto" : 0, opacity: menuOpen ? 1 : 0 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }}>
-        {/* First animate the background of the menu */}
+      <motion.div className="sm:hidden" initial={{ height: 0, opacity: 0 }} animate={{ height: menuOpen ? "auto" : 0, opacity: menuOpen ? 1 : 0 }} >
         <motion.div className="space-y-1 px-2 pt-2 pb-3" initial={{ opacity: 0 }} animate={{ opacity: menuOpen ? 1 : 0 }} transition={{ duration: 0.3, delay: 0.15 }}>
-          <a href="#" className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Dashboard</a>
-          <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
-          <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
-          <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
+          <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Dashboard</a>
+          <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Team</a>
+          <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Projects</a>
+          <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Calendar</a>
         </motion.div>
       </motion.div>
     </nav>
