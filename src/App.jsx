@@ -115,8 +115,6 @@ export default function App() {
           <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
-      {/* Button when clicked sets loggedIn to other value */}
-      <button onClick={() => setLoggedIn(!loggedIn)}>Toggle Logged In</button>
     </main>
   </>;
 }

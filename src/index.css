@@ -9,11 +9,11 @@
 }
 
 body {
-    background-color: rgb(55, 65, 81);
+    background-color: var(--color-primary);
 }
 
 nav {
-    background-color: rgb(17, 24, 39);
+    background-color: var(--color-quinary);
     padding-left: 1rem;
     padding-right: 1rem;
     .nav-container {
