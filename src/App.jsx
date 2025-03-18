@@ -35,23 +35,11 @@ export default function App() {
     // Check if user is logged in
     account.get().then((response) => {
       setUser(response);
-    }
-    ).catch((error) => {
+      const defaultAvatar = avatars.getInitials(response.name, 100, 100);
+      setProfilePictureUrl(defaultAvatar);
+    }).catch((error) => {
       console.log(error);
     });
-    if (user) {
-      // If you're storing the profile picture URL in `prefs`
-      const customProfilePicture = user.prefs?.profilePictureUrl;
-
-      // If no custom profile picture, generate a default avatar
-      if (!customProfilePicture) {
-        const defaultAvatar = avatars.getInitials(user.name, 100, 100);
-        setProfilePictureUrl(defaultAvatar);
-      } else {
-        setProfilePictureUrl(customProfilePicture);
-      }
-    }
-
     // Add event listener when the component is mounted
     document.addEventListener("mousedown", handleClickOutside);
     window.addEventListener("resize", handleResize);
