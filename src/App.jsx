@@ -1,16 +1,18 @@
 import { useState, useEffect, useRef } from "react"; // For state and effects
 import { motion, AnimatePresence } from "framer-motion"; // For animations
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { account, avatars } from "./config/appwrite";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import HomePage from "./pages/HomePage";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(true); // Testing purposes only
+  const [user, setUser] = useState(null);
 
   // State for the mobile menu and profile dropdown
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [profilePictureUrl, setProfilePictureUrl] = useState(null); // Initialize as null
 
   // Keeps the state of the menus across renders
   const profileMenuRef = useRef(null);
@@ -30,6 +32,25 @@ export default function App() {
         setProfileOpen(false);
       }
     };
+    // Check if user is logged in
+    account.get().then((response) => {
+      setUser(response);
+    }
+    ).catch((error) => {
+      console.log(error);
+    });
+    if (user) {
+      // If you're storing the profile picture URL in `prefs`
+      const customProfilePicture = user.prefs?.profilePictureUrl;
+
+      // If no custom profile picture, generate a default avatar
+      if (!customProfilePicture) {
+        const defaultAvatar = avatars.getInitials(user.name, 100, 100);
+        setProfilePictureUrl(defaultAvatar);
+      } else {
+        setProfilePictureUrl(customProfilePicture);
+      }
+    }
 
     // Add event listener when the component is mounted
     document.addEventListener("mousedown", handleClickOutside);
@@ -67,11 +88,11 @@ export default function App() {
         {/* Profile Dropdown */}
         <div>
           {/* If user is logged in, show /BV.png, else show Login/register button */}
-          {loggedIn ? (
+          {user ? (
             <div className="relative ml-3">
               <button className="flex" onClick={() => setProfileOpen(!profileOpen)} type="button" ref={profileMenuRef}>
                 {/* Profile Image */}
-                <img className="profile-picture" src="/BV.png" alt="Profile Image" />
+                <img className="profile-picture" src={profilePictureUrl} alt="Profile Image" />
               </button>
               {/* Profile dropdown with Framer Motion animation */}
               {profileOpen && (
@@ -111,8 +132,8 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login user={user} />} />
+          <Route path="/register" element={<Register user={user} />} />
         </Routes>
       </BrowserRouter>
     </main>

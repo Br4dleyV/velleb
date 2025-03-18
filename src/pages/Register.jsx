@@ -1,50 +1,76 @@
-export default function Register() {
-    return (
-        <div className="mt-7 bg-white  rounded-xl mx-auto sm:w-96 w-auto">
-            <div className="p-4 sm:p-7">
-                {/* Title & Sign In Link */}
-                <div className="text-center text-sm">
-                    <h1 className="text-2xl font-bold">Sign up</h1>
-                    <p className="mt-2 text-sm text-gray-600">Already have an account?</p><a className="text-teal-600 hover:underline font-medium" href="/login">{' '}Sign in here</a>
-                </div>
+import { Link } from "react-router-dom";
+import { account } from "../config/appwrite";
+import { useEffect } from "react";
 
-                <div className="mt-4">
-                    {/* OAuth2 Options */}
-                    <button type="button" className="mb-3 w-full py-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border cursor-pointer border-gray-200 shadow-2xs hover:bg-gray-50">
-                        <svg className="w-4 h-auto" viewBox="0 0 46 47">
-                            <path d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z" fill="#4285F4" />
-                            <path d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z" fill="#34A853" />
-                            <path d="M10.1212 28.1413C9.62245 26.6725 9.32908 25.1156 9.32908 23.5C9.32908 21.8844 9.62245 20.3275 10.0918 18.8588V18.5356L2.75765 12.8369L2.52296 12.9544C0.909439 16.1269 0 19.7106 0 23.5C0 27.2894 0.909439 30.8731 2.49362 34.0456L10.1212 28.1413Z" fill="#FBBC05" />
-                            <path d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z" fill="#EB4335" />
-                        </svg>
-                        Sign up with Google
-                    </button>
+export default function Register({ user }) {
+    // Check if user is already logged in
+    useEffect(() => {
+        if (user) {
+            window.location.href = "/";
+        }
+    }, [user]);
 
-                    {/* Divider */}
-                    <div className="py-3 flex items-center text-xs text-gray-400 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6">OR</div>
+    // Registers a new user
+    async function handleRegister(e) {
+        e.preventDefault();
 
-                    <form>
-                        <div className="grid gap-y-4">
-                            {/* Email */}
-                            <div>
-                                <label htmlFor="email" className="block text-sm mb-2">Email address</label>
-                                <input type="email" id="email" name="email" placeholder="email@example.com" className="p-3 py-2.5 block w-full rounded-lg border border-gray-200 shadow-2xs hover:bg-gray-50" required />
+        // Collect form data
+        const [name, email, password] = e.target.elements;
+
+        try {
+            // Create a new account
+            await account.create('unique()', email.value, password.value, name.value);
+
+            // Automatically log in the user
+            await account.createEmailPasswordSession(email.value, password.value);
+
+            // Redirect to home after registration
+            window.location.href = "/";
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    return <>
+        <main>
+            <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+                <h2 className="text-center text-2xl/9 font-bold tracking-tight text-gray-900">Create an account</h2>
+
+                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                    <form className="space-y-6" onSubmit={handleRegister}>
+                        <div>
+                            <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">Full Name</label>
+                            <div className="mt-2">
+                                <input type="text" name="name" id="name" autoComplete="name" required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-black sm:text-sm/6" />
                             </div>
+                        </div>
 
-                            {/* Password */}
-                            <div>
-                                <div className="flex flex-wrap justify-between items-center gap-2">
-                                    <label htmlFor="password" className="block text-sm mb-2">Password</label>
-                                </div>
-                                <input type="password" id="password" name="password" placeholder="Enter password" className="p-3 py-2.5 block w-full rounded-lg border border-gray-200 shadow-2xs hover:bg-gray-50" required />
+                        <div>
+                            <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">Email address</label>
+                            <div className="mt-2">
+                                <input type="email" name="email" id="email" autoComplete="email" required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-black sm:text-sm/6" />
                             </div>
+                        </div>
 
-                            {/* Sign Up Button */}
-                            <button type="submit" className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white s hover:bg-teal-500">Sign up</button>
+                        <div>
+                            <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">Password</label>
+                            <div className="mt-2">
+                                <input type="password" name="password" id="password" autoComplete="new-password" required className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-black sm:text-sm/6" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit" className="flex w-full justify-center rounded-md bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-gray-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">Sign up</button>
                         </div>
                     </form>
+
+                    <p className="mt-10 text-center text-sm/6 text-gray-500">
+                        Already have an account? {' '}
+                        <Link to="/login" className="font-semibold text-black hover:text-gray-600">Log in here</Link>
+                    </p>
                 </div>
             </div>
-        </div>
-    );
+        </main>
+    </>
 }
