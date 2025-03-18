@@ -50,6 +50,16 @@ export default function App() {
     }
   }, []);
 
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      await account.deleteSession('current'); // Delete the current session
+      window.location.href = "/login"; // Redirect to login page
+    } catch (error) {
+      console.error("Logout failed:", error.message);
+    }
+  };
+
   return <>
     <nav>
       <div className="nav-container">
@@ -87,7 +97,7 @@ export default function App() {
                 <motion.div className="dropdown-menu" initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
                   <a href="#">Your Profile</a>
                   <a href="#">Settings</a>
-                  <a href="#">Sign out</a>
+                  <a href="#" onClick={handleLogout}>Sign out</a>
                 </motion.div>
               )}
             </div>
