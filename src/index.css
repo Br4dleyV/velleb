@@ -1,1 +1,123 @@
 @import "tailwindcss";
+
+:root {
+    --color-primary: #edecdd;
+    --color-secondary: #5ca2be;
+    --color-tertiary: #615de8;
+    --color-quaternary: #854e72;
+    --color-quinary: #181b29;
+}
+
+body {
+    background-color: rgb(55, 65, 81);
+}
+
+nav {
+    background-color: rgb(17, 24, 39);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    .nav-container {
+        position: relative;
+        display: flex;
+        height: 4rem;
+        align-items: center;
+        justify-content: space-between;
+        .logo-hamburger {
+            display: flex;
+            min-width: 0px;
+            flex-shrink: 0;
+            align-items: center;
+        }
+        .hamburger {
+            margin-right: 0.5rem;
+            color: rgb(156, 163, 175);
+            &:hover {
+                cursor: pointer;
+                color: var(--color-primary);
+                width: 1.5rem;
+            }
+        }
+        .logo {
+            height: 2.5rem;
+            object-fit: contain;
+        }
+        .normal-menu {
+            display: flex;
+            a {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                font-weight: 500;
+                color: rgb(209, 213, 219);
+                &:hover {
+                    color: var(--color-primary);
+                }
+            }
+        }
+        .profile-picture {
+            height: 2rem;
+            border-radius: 100%;
+            object-fit: contain;
+        }
+        .dropdown-menu {
+            position: absolute;
+            right: 0px;
+            z-index: 10;
+            margin-top: 0.5rem;
+            width: 12rem;
+            border-radius: 0.375rem;
+            background-color: rgb(255, 255, 255);
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            box-shadow: 0 0 0 0px #fff,
+                0 0 0 calc(1px + 0px) rgb(59, 130, 246, 0.5), 0 0 #0000;
+            a {
+                display: block;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+            }
+        }
+        .login-register-btns {
+            display: flex;
+            flex-shrink: 0;
+            gap: 0.5rem;
+        }
+    }
+}
+
+.button {
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0.375rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0, 0, 0, 0.05);
+}
+
+.button-green {
+    background-color: rgb(20, 184, 166);
+    color: rgb(255, 255, 255);
+    &:hover {
+        background-color: rgb(20, 184, 166, 0.8);
+    }
+}
+
+.button-white {
+    background-color: var(--color-primary);
+    color: rgb(0, 0, 0);
+    &:hover {
+        background-color: rgba(237, 236, 221, 0.8);
+    }
+}

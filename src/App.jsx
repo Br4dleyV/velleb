@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import HomePage from "./pages/HomePage";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false); // Testing purposes only
+  const [loggedIn, setLoggedIn] = useState(true); // Testing purposes only
 
   // State for the mobile menu and profile dropdown
   const [menuOpen, setMenuOpen] = useState(false);
@@ -42,54 +42,52 @@ export default function App() {
   }, []);
 
   return <>
-    <nav className="bg-gray-900">
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
-          <div className="flex items-center min-w-0 flex-shrink-0">
-            {/* Hamburger Button */}
-            <button type="button" className="sm:hidden mr-2 text-gray-400 hover:text-white" onClick={() => setMenuOpen(!menuOpen)}>
-              <motion.svg className="size-6" strokeWidth="1.5" stroke="currentColor" key={menuOpen ? "close" : "menu"} initial={{ opacity: 0, rotate: -90, scale: 0.8 }} animate={{ opacity: 1, rotate: 0, scale: 1 }}>
-                {/* If menu is open show X icon, otherwise show hamburger icon */}
-                {menuOpen ? (<motion.path d="M6 18L18 6M6 6l12 12" />) : (<motion.path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />)}
-              </motion.svg>
-            </button>
-            {/* Height max of parent container */}
-            <img className="h-10 object-contain" src="/BV.png" alt="BradleyV" />
+    <nav>
+      <div className="nav-container">
+        <div className="logo-hamburger">
+          {/* Hamburger Button */}
+          <button type="button" className="hamburger sm:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+            <motion.svg className="size-6" strokeWidth="1.5" stroke="currentColor" key={menuOpen ? "close" : "menu"} initial={{ opacity: 0, rotate: -90, scale: 0.8 }} animate={{ opacity: 1, rotate: 0, scale: 1 }}>
+              {/* If menu is open show X icon, otherwise show hamburger icon */}
+              {menuOpen ? (<motion.path d="M6 18L18 6M6 6l12 12" />) : (<motion.path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />)}
+            </motion.svg>
+          </button>
+          {/* Height max of parent container */}
+          <img className="logo" src="/BV.png" alt="BradleyV" />
+        </div>
+        {/* Normal Menu (hidden when on smaller screens) */}
+        <div className="hidden sm:block">
+          <div className="normal-menu space-x-4">
+            <a href="#">Dashboard</a>
+            <a href="#">Team</a>
+            <a href="#">Projects</a>
+            <a href="#">Calendar</a>
           </div>
-          {/* Normal Menu (hidden when on smaller screens) */}
-          <div className="hidden sm:ml-6 sm:block">
-            <div className="flex space-x-4">
-              <a href="#" className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white">Dashboard</a>
-              <a href="#" className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white">Team</a>
-              <a href="#" className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white">Projects</a>
-              <a href="#" className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white">Calendar</a>
+        </div>
+        {/* Profile Dropdown */}
+        <div>
+          {/* If user is logged in, show /BV.png, else show Login/register button */}
+          {loggedIn ? (
+            <div className="relative ml-3">
+              <button className="flex" onClick={() => setProfileOpen(!profileOpen)} type="button" ref={profileMenuRef}>
+                {/* Profile Image */}
+                <img className="profile-picture" src="/BV.png" alt="Profile Image" />
+              </button>
+              {/* Profile dropdown with Framer Motion animation */}
+              {profileOpen && (
+                <motion.div className="dropdown-menu" initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
+                  <a href="#">Your Profile</a>
+                  <a href="#">Settings</a>
+                  <a href="#">Sign out</a>
+                </motion.div>
+              )}
             </div>
-          </div>
-          {/* Profile Dropdown */}
-          <div className="flex items-center flex-shrink-0">
-            {/* If user is logged in, show /BV.png, else show Login/register button */}
-            {loggedIn ? (
-              <div className="relative ml-3">
-                <button className="flex" onClick={() => setProfileOpen(!profileOpen)} type="button" ref={profileMenuRef}>
-                  {/* Profile Image */}
-                  <img className="h-8 object-contain rounded-full" src="/BV.png" alt="Profile Image" />
-                </button>
-                {/* Profile dropdown with Framer Motion animation */}
-                {profileOpen && (
-                  <motion.div className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-white py-1 ring-1 shadow-lg ring-black/10" initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
-                    <a href="#" className="block px-4 py-2 text-sm">Your Profile</a>
-                    <a href="#" className="block px-4 py-2 text-sm">Settings</a>
-                    <a href="#" className="block px-4 py-2 text-sm">Sign out</a>
-                  </motion.div>
-                )}
-              </div>
-            ) : (
-              <div className="flex gap-2 sm:space-x-2 sm:flex-nowrap flex-shrink-0">
-                <a className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-teal-500 whitespace-nowrap" href="/login">Login</a>
-                <a className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-grey-300 hover:text-teal-700 whitespace-nowrap" href="/register">Register</a>
-              </div>
-            )}
-          </div>
+          ) : (
+            <div className="login-register-btns sm:space-x-2 sm:flex-nowrap">
+              <a className="button button-green" href="/login">Login</a>
+              <a className="button button-white" href="/register">Register</a>
+            </div>
+          )}
         </div>
       </div>
 
@@ -117,6 +115,8 @@ export default function App() {
           <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
+      {/* Button when clicked sets loggedIn to other value */}
+      <button onClick={() => setLoggedIn(!loggedIn)}>Toggle Logged In</button>
     </main>
   </>;
 }
