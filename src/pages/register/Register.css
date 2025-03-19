@@ -1,4 +1,4 @@
-.login {
+.register {
     display: flex;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -73,7 +73,7 @@
 /* Media Queries */
 /*               */
 @media screen and (min-width: 721px) {
-    .login {
+    .register {
         width: 30rem;
         margin: auto;
     }

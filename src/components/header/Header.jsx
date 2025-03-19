@@ -1,4 +1,3 @@
-// src/components/header/Header.jsx
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { avatars } from "../../config/Appwrite";
