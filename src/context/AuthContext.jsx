@@ -64,8 +64,7 @@ export function AuthProvider({ children }) {
         try {
             // Create a new user account
             const user = await account.create("unique()", email, password, name);
-            setUser(user);
-            login(email, password);
+            await login(email, password);
             return user;
         } catch (error) {
             console.error("Registration failed:", error.message);
