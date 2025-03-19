@@ -14,6 +14,18 @@ export default function Header() {
     const [profilePictureUrl, setProfilePictureUrl] = useState(null);
     const profileMenuRef = useRef(null);
     const profileDropdownRef = useRef(null);
+    const [theme, setTheme] = useState(() => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            return savedTheme;
+        }
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        return prefersDark ? 'dark' : 'light';
+    });
+
+    function toggleTheme() {
+        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
 
     useEffect(() => {
         // Close the menu on resize
@@ -38,8 +50,12 @@ export default function Header() {
             }
         }
 
-        // Add event listeners
+        // Set the theme and save it to local storage
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        // Get the user's profile picture
         getProfilePicture();
+        // Add event listeners
         document.addEventListener("mousedown", handleClickOutside);
         window.addEventListener("resize", handleResize);
 
@@ -47,7 +63,7 @@ export default function Header() {
             document.removeEventListener("mousedown", handleClickOutside);
             window.removeEventListener("resize", handleResize);
         };
-    }, [user]);
+    }, [user, theme]);
 
     return (
         <header>
@@ -81,6 +97,7 @@ export default function Header() {
                                         <motion.div initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
                                             <a href="#">Your Profile</a>
                                             <a href="#">Settings</a>
+                                            <a href="#" onClick={toggleTheme}>Dark Mode</a>
                                             <a href="#" onClick={logout}>Sign out</a>
                                         </motion.div>
                                     )}

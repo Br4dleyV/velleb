@@ -6,10 +6,25 @@
     --color-quaternary: #854e72;
     --color-quinary: #181b29;
     --color-quinary-hover: #424a6d;
+    --background-color: #edecdd;
+    --text-color: #000000;
+}
+
+[data-theme='dark'] {
+    --color-primary: #edecdd;
+    --color-primary-hover: #424a6d;
+    --color-secondary: #5ca2be;
+    --color-tertiary: #615de8;
+    --color-quaternary: #854e72;
+    --color-quinary: #181b29;
+    --color-quinary-hover: #9ca3af;
+    --background-color: #10121e;
+    --text-color: #edecdd;
 }
 
 body {
-    background-color: var(--color-primary);
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: system-ui, sans-serif;
 }
 
