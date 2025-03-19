@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion"; // For animations
 import { useState, useEffect, useRef } from "react"; // For state and effects
-import { account, avatars } from "../config/appwrite";
-import '../styles/Header.css'
+import { account, avatars } from "../../config/appwrite";
+import './Header.css'
 
 export default function Header({ user }) {
     // State for the mobile menu and profile dropdown

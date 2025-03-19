@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"; // For state and effects
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { account } from "./config/appwrite";
-import Header from "./components/Header";
+import Header from "./components/header/Header";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
