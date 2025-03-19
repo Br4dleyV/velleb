@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { avatars } from "../../config/Appwrite";
 import { useAuth } from "../../context/AuthContext";
+import ThemeToggleButton from "../themeToggleButton/ThemeToggleButton";
 import './Header.css';
 
 export default function Header() {
@@ -91,13 +92,13 @@ export default function Header() {
                     <li>
                         {user ? (
                             <>
+                                <ThemeToggleButton theme={theme} toggleTheme={toggleTheme} />
                                 <button onClick={() => setProfileOpen(!profileOpen)} type="button" ref={profileMenuRef}>
                                     <img src={profilePictureUrl} alt="Profile Image" />
                                     {profileOpen && (
                                         <motion.div initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
                                             <a href="#">Your Profile</a>
                                             <a href="#">Settings</a>
-                                            <a href="#" onClick={toggleTheme}>Dark Mode</a>
                                             <a href="#" onClick={logout}>Sign out</a>
                                         </motion.div>
                                     )}

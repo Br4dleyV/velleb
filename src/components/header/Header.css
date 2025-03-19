@@ -53,6 +53,7 @@ header {
         /* Profile Dropdown / Login-Register */
         li:nth-child(3) {
             display: flex;
+            align-items: center;
             gap: 0.5rem;
 
             button {
