@@ -73,7 +73,7 @@ main {
 /* Media Queries */
 /*               */
 @media screen and (min-width: 721px) {
-    main {
+    .login {
         width: 30rem;
         margin: auto;
     }
