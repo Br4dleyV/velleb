@@ -83,6 +83,18 @@ export function AuthProvider({ children }) {
             throw error;
         }
     };
+
+    // Function to update the user password
+    async function updatepassword(userId, secret, password) {
+        try {
+            // Update the user password
+            await account.updateRecovery(userId, secret, password);
+            return true;
+        } catch (error) {
+            console.error("Password update failed:", error.message);
+            throw error;
+        }
+    };
     
     // Value to pass to the context requests
     const value = {
@@ -92,6 +104,7 @@ export function AuthProvider({ children }) {
         logout,
         register,
         resetpassword,
+        updatepassword,
     };
 
     return (
