@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import account from "../config/Appwrite.js";
+import account from "../config/Appwrite";
 
 // Create the AuthContext
 const AuthContext = createContext();
