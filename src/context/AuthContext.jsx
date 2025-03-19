@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { account } from "../config/Appwrite";
 
-// Create the AuthContext
 const AuthContext = createContext();
 
 // Create a custom hook to use the AuthContext
@@ -9,21 +8,24 @@ export function useAuth() {
     return useContext(AuthContext);
 };
 
-// Create the AuthProvider component
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null); // State to hold the authenticated user
-    const [loading, setLoading] = useState(true); // State to track loading state
+    // State to hold the authenticated user and loading status
+    const [user, setUser] = useState(null); 
+    const [loading, setLoading] = useState(true);
 
-    // Check if the user is already logged in on initial load
+    // Check if the user is logged in on component mount
     useEffect(() => {
         async function fetchUser() {
             try {
+                // Get the user details if logged in
                 const user = await account.get();
-                setUser(user); // Set the user if logged in
+                setUser(user); 
             } catch (error) {
-                setUser(null); // Set user to null if not logged in
+                // Set null if not logged in
+                setUser(null); 
             } finally {
-                setLoading(false); // Set loading to false once the check is complete
+                // Set loading to false after checking the user
+                setLoading(false); 
             }
         };
 
@@ -33,9 +35,10 @@ export function AuthProvider({ children }) {
     // Function to log in the user
     async function login(email, password) {
         try {
-            const session = await account.createEmailPasswordSession(email, password);
+            // Create a new session using the email and password
+            await account.createEmailPasswordSession(email, password);
             const user = await account.get();
-            setUser(user); // Update the user state
+            setUser(user);
             return user;
         } catch (error) {
             console.error("Login failed:", error.message);
@@ -46,9 +49,10 @@ export function AuthProvider({ children }) {
     // Function to log out the user
     async function logout() {
         try {
+            // Delete the current session
             await account.deleteSession("current");
-            setUser(null); // Clear the user state
-            window.location.href = "/login"; // Redirect to the login page
+            setUser(null); 
+            window.location.href = "/login"; 
         } catch (error) {
             console.error("Logout failed:", error.message);
             throw error;
@@ -58,6 +62,7 @@ export function AuthProvider({ children }) {
     // Function to register a new user
     async function register(email, password, name) {
         try {
+            // Create a new user account
             const user = await account.create("unique()", email, password, name);
             return user;
         } catch (error) {
@@ -66,7 +71,7 @@ export function AuthProvider({ children }) {
         }
     };
     
-    // Value to be provided by the context
+    // Value to pass to the context requests
     const value = {
         user,
         loading,
@@ -77,7 +82,7 @@ export function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children} {/* Render children only when not loading */}
+            {!loading && children} {/* Only render items when not loading */}
         </AuthContext.Provider>
     );
 };
