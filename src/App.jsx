@@ -1,8 +1,8 @@
 import { AuthProvider } from "./context/AuthContext.jsx"; // Import the AuthProvider
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/Login/Login.jsx";
+import Register from "./pages/Register/Register.jsx";
 import Home from "./pages/Home";
 
 export default function App() {

@@ -1,7 +1,7 @@
 // src/pages/Register.jsx
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { useAuth } from "../context/AuthContext"; // Import the useAuth hook
+import { useAuth } from "../../context/AuthContext"; // Import the useAuth hook
 
 export default function Register() {
     const { user, register } = useAuth(); // Access user and register function from AuthContext
