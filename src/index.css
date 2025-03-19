@@ -1,17 +1,21 @@
-@import "tailwindcss";
-
 :root {
     --color-primary: #edecdd;
+    --color-primary-hover: #9ca3af;
     --color-secondary: #5ca2be;
     --color-tertiary: #615de8;
     --color-quaternary: #854e72;
     --color-quinary: #181b29;
+    --color-quinary-hover: #424a6d;
 }
 
 body {
     background-color: var(--color-primary);
+    font-family: system-ui, sans-serif;
 }
 
+/*                     */
+/* Main Navigation Bar */
+/*                     */
 header {
     background-color: var(--color-quinary);
 
@@ -22,6 +26,7 @@ header {
         justify-content: space-between;
         padding: 0 1rem;
 
+        /* Hamburger & Website Logo */
         li:nth-child(1) {
             display: flex;
             align-items: center;
@@ -29,7 +34,7 @@ header {
 
             button {
                 display: none;
-                color: rgb(156, 163, 175);
+                color: var(--color-primary-hover);
 
                 &:hover {
                     cursor: pointer;
@@ -50,6 +55,7 @@ header {
             }
         }
 
+        /* Normal Nav Bar */
         li:nth-child(2) {
             display: block;
 
@@ -62,7 +68,7 @@ header {
                 font-size: 0.875rem;
                 line-height: 1.25rem;
                 font-weight: 500;
-                color: rgb(209, 213, 219);
+                color: var(--color-primary);
 
                 &:hover {
                     color: var(--color-primary);
@@ -70,6 +76,7 @@ header {
             }
         }
 
+        /* Profile Dropdown / Login-Register */
         li:nth-child(3) {
             display: flex;
             flex-shrink: 0;
@@ -103,13 +110,44 @@ header {
                         padding-bottom: 0.5rem;
                         font-size: 0.875rem;
                         line-height: 1.25rem;
+                        color: var(--color-quinary);
+
+                        &:hover {
+                            color: var(--color-quinary-hover);
+                        }
                     }
+                }
+            }
+        }
+
+        /* Mobile Nav Bar */
+        div {
+            margin: 0.25rem 0 0.75rem 0;
+
+            a {
+                display: block;
+                padding: 0.5rem 0;
+                font-weight: 500;
+                color: var(--color-primary);
+
+                &:hover {
+                    color: var(--color-primary-hover);
                 }
             }
         }
     }
 }
 
+/*                               */
+/* Container for all other pages */
+/*                               */
+main {
+    padding: 1rem;
+}
+
+/*                        */
+/* Default button styling */
+/*                        */
 .button {
     cursor: pointer;
     white-space: nowrap;
@@ -124,6 +162,9 @@ header {
     box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0, 0, 0, 0.05);
 }
 
+/*                */
+/* Button styling */
+/*                */
 .button-green {
     background-color: rgb(20, 184, 166);
     color: rgb(255, 255, 255);
@@ -142,6 +183,9 @@ header {
     }
 }
 
+/*               */
+/* Media Queries */
+/*               */
 @media screen and (max-width: 720px) {
     header {
         nav {

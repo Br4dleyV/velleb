@@ -81,12 +81,11 @@ export default function App() {
           <a href="#">Calendar</a>
         </li>
 
-        {/* Profile Dropdown */}
+        {/* Profile Dropdown / Login-Register */}
         <li>
           {user ? (
             <>
               <button onClick={() => setProfileOpen(!profileOpen)} type="button" ref={profileMenuRef}>
-                {/* Profile Image */}
                 <img src={profilePictureUrl} alt="Profile Image" />
                 {profileOpen && (
                   <motion.div initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
@@ -109,20 +108,20 @@ export default function App() {
       {/* Mobile Nav Bar */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div className="sm:hidden overflow-hidden" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}> {/* Add overflow-hidden to prevent content from being visible during animation*/}
-            <motion.div className="space-y-1 px-2 pt-2 pb-3" initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.15 } }} exit={{ opacity: 0 }}>
-              <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Dashboard</a>
-              <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Team</a>
-              <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Projects</a>
-              <a href="#" className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Calendar</a>
+          <motion.nav initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}> {/* Add overflow-hidden to prevent content from being visible during animation*/}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.15 } }} exit={{ opacity: 0 }}>
+              <a href="#">Dashboard</a>
+              <a href="#">Team</a>
+              <a href="#">Projects</a>
+              <a href="#">Calendar</a>
             </motion.div>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </header>
 
     {/* Router */}
-    <main className="p-4">
+    <main>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
