@@ -1,9 +1,9 @@
-import { AuthProvider } from "./context/AuthContext.jsx"; // Import the AuthProvider
+import { AuthProvider } from "./context/AuthContext.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header";
 import Login from "./pages/login/Login.jsx";
 import Register from "./pages/register/Register.jsx";
-import Home from "./pages/Home";
+import Home from "./pages/home/Home.jsx";
 
 export default function App() {
   return <>
