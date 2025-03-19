@@ -1,35 +1,25 @@
-import { useState, useEffect, useRef } from "react"; // For state and effects
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { account } from "./config/appwrite";
+import { AuthProvider } from "./context/AuthContext.jsx"; // Import the AuthProvider
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 
 export default function App() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // Check if user is logged in
-    account.get().then((response) => {
-      setUser(response);
-    }).catch((error) => {
-      console.log(error);
-    });
-  }, []);
-
   return <>
-    <Header user={user} />
+    <AuthProvider>
+      <Header />
 
-    {/* Router */}
-    <main>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login user={user} />} />
-          <Route path="/register" element={<Register user={user} />} />
-        </Routes>
-      </BrowserRouter>
-    </main>
+      {/* Router */}
+      <main>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </main>
+    </AuthProvider>
   </>;
 }

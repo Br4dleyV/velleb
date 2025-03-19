@@ -1,62 +1,49 @@
-import { motion, AnimatePresence } from "framer-motion"; // For animations
-import { useState, useEffect, useRef } from "react"; // For state and effects
-import { account, avatars } from "../../config/appwrite";
-import './Header.css'
+// src/components/header/Header.jsx
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { avatars } from "../../config/Appwrite";
+import { useAuth } from "../../context/AuthContext"; // Import the useAuth hook
+import './Header.css';
 
-export default function Header({ user }) {
-    // State for the mobile menu and profile dropdown
+export default function Header() {
+    const { user, logout } = useAuth(); // Access user and logout function from AuthContext
     const [menuOpen, setMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
-    const [profilePictureUrl, setProfilePictureUrl] = useState(null); // Initialize as null
-    // Keeps the state of the menus across renders
+    const [profilePictureUrl, setProfilePictureUrl] = useState(null);
     const profileMenuRef = useRef(null);
     const profileDropdownRef = useRef(null);
 
     useEffect(() => {
-        // Close the mobile menu when resizing to desktop
         function handleResize() {
             if (window.innerWidth >= 640) {
                 setMenuOpen(false);
             }
-        };
-        // Close the profile menu when clicking outside
+        }
+
         function handleClickOutside(e) {
-            // Close the profile menu if clicked outside
             if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target) && !profileMenuRef.current.contains(e.target)) {
                 setProfileOpen(false);
             }
-        };
-        function getProfilePicture() {
-            console.log(user);
+        }
 
+        function getProfilePicture() {
             if (user) {
                 const defaultAvatar = avatars.getInitials(user.name, 100, 100);
                 setProfilePictureUrl(defaultAvatar);
             }
         }
 
-        // Add event listener when the component is mounted
         getProfilePicture();
         document.addEventListener("mousedown", handleClickOutside);
         window.addEventListener("resize", handleResize);
-        // Remove event listener when the component is unmounted (for performance reasons, otherwise multiple event listeners are added)
-        return function cleanup() {
+
+        return () => {
             document.removeEventListener("mousedown", handleClickOutside);
             window.removeEventListener("resize", handleResize);
-        }
+        };
     }, [user]);
 
-    // Handle logout
-    const handleLogout = async () => {
-        try {
-            await account.deleteSession('current'); // Delete the current session
-            window.location.href = "/login"; // Redirect to login page
-        } catch (error) {
-            console.error("Logout failed:", error.message);
-        }
-    };
-
-    return <>
+    return (
         <header>
             <nav>
                 <ul>
@@ -88,7 +75,7 @@ export default function Header({ user }) {
                                         <motion.div initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
                                             <a href="#">Your Profile</a>
                                             <a href="#">Settings</a>
-                                            <a href="#" onClick={handleLogout}>Sign out</a>
+                                            <a href="#" onClick={logout}>Sign out</a>
                                         </motion.div>
                                     )}
                                 </button>
@@ -101,10 +88,11 @@ export default function Header({ user }) {
                         )}
                     </li>
                 </ul>
+
                 {/* Mobile Nav Bar */}
                 <AnimatePresence>
                     {menuOpen && (
-                        <motion.nav initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}> {/* Add overflow-hidden to prevent content from being visible during animation*/}
+                        <motion.nav initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}>
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.15 } }} exit={{ opacity: 0 }}>
                                 <a href="#">Dashboard</a>
                                 <a href="#">Team</a>
@@ -115,7 +103,6 @@ export default function Header({ user }) {
                     )}
                 </AnimatePresence>
             </nav>
-
         </header>
-    </>
+    );
 }

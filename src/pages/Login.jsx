@@ -1,8 +1,11 @@
+// src/pages/Login.jsx
 import { Link } from "react-router-dom";
-import { account } from "../config/appwrite";
 import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext"; // Import the useAuth hook
 
-function Login({ user }) {
+function Login() {
+    const { user, login } = useAuth(); // Access user and login function from AuthContext
+
     // Check if user is already logged in
     useEffect(() => {
         if (user) {
@@ -16,15 +19,12 @@ function Login({ user }) {
 
         // Collect form data
         const [email, password] = e.target.elements;
-
-        // Create a new session
-        account.createEmailPasswordSession(email.value, password.value).then(() => {
-            // If user logged in correctly, redirect to home
-            window.location.href = "/";
-        }).catch((error) => {
-            // If user session failed to create, log error
-            console.log(error);
-        });
+        try {
+            await login(email.value, password.value); // Use the login function from AuthContext
+            window.location.href = "/"; // Redirect to home after successful login
+        } catch (error) {
+            console.error("Login failed:", error.message); // Log error if login fails
+        }
     }
 
     return <>
@@ -60,7 +60,6 @@ function Login({ user }) {
 
                     <p className="mt-10 text-center text-sm/6 text-gray-500">
                         Don't have an account yet? {' '}
-                        {/* On click, navigate to /register */}
                         <Link to="/register" className="font-semibold text-black hover:text-gray-600">Register here</Link>
                     </p>
                 </div>

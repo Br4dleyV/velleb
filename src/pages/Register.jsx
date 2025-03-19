@@ -1,8 +1,11 @@
+// src/pages/Register.jsx
 import { Link } from "react-router-dom";
-import { account } from "../config/appwrite";
 import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext"; // Import the useAuth hook
 
-export default function Register({ user }) {
+export default function Register() {
+    const { user, register } = useAuth(); // Access user and register function from AuthContext
+
     // Check if user is already logged in
     useEffect(() => {
         if (user) {
@@ -18,16 +21,10 @@ export default function Register({ user }) {
         const [name, email, password] = e.target.elements;
 
         try {
-            // Create a new account
-            await account.create('unique()', email.value, password.value, name.value);
-
-            // Automatically log in the user
-            await account.createEmailPasswordSession(email.value, password.value);
-
-            // Redirect to home after registration
-            window.location.href = "/";
+            await register(email.value, password.value, name.value); // Use the register function from AuthContext
+            window.location.href = "/"; // Redirect to home after successful registration
         } catch (error) {
-            console.log(error);
+            console.error("Registration failed:", error.message); // Log error if registration fails
         }
     }
 
