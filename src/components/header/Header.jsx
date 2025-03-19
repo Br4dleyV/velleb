@@ -1,11 +1,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { avatars } from "../../config/Appwrite";
-import { useAuth } from "../../context/AuthContext"; // Import the useAuth hook
+import { useAuth } from "../../context/AuthContext";
 import './Header.css';
 
 export default function Header() {
-    const { user, logout } = useAuth(); // Access user and logout function from AuthContext
+    // Request user and logout function from AuthContext
+    const { user, logout } = useAuth();
+
+    // State to track menu and profile dropdown state
     const [menuOpen, setMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
     const [profilePictureUrl, setProfilePictureUrl] = useState(null);
@@ -13,18 +16,21 @@ export default function Header() {
     const profileDropdownRef = useRef(null);
 
     useEffect(() => {
+        // Close the menu on resize
         function handleResize() {
-            if (window.innerWidth >= 640) {
+            if (window.innerWidth >= 720) {
                 setMenuOpen(false);
             }
         }
 
+        // Close the profile dropdown when clicking outside
         function handleClickOutside(e) {
             if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target) && !profileMenuRef.current.contains(e.target)) {
                 setProfileOpen(false);
             }
         }
 
+        // Get the user's profile picture
         function getProfilePicture() {
             if (user) {
                 const defaultAvatar = avatars.getInitials(user.name, 100, 100);
@@ -32,6 +38,7 @@ export default function Header() {
             }
         }
 
+        // Add event listeners
         getProfilePicture();
         document.addEventListener("mousedown", handleClickOutside);
         window.addEventListener("resize", handleResize);
@@ -53,7 +60,7 @@ export default function Header() {
                                 {menuOpen ? (<motion.path d="M6 18L18 6M6 6l12 12" />) : (<motion.path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />)}
                             </motion.svg>
                         </button>
-                        <img src="/BV.png" alt="BradleyV" />
+                        <a href="/"><img src="/BV.png" alt="BradleyV" /></a>
                     </li>
 
                     {/* Normal Nav Bar */}
