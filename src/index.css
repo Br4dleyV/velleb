@@ -12,38 +12,49 @@ body {
     background-color: var(--color-primary);
 }
 
-nav {
+header {
     background-color: var(--color-quinary);
-    padding-left: 1rem;
-    padding-right: 1rem;
-    .nav-container {
-        position: relative;
+
+    nav {
         display: flex;
         height: 4rem;
         align-items: center;
         justify-content: space-between;
-        .logo-hamburger {
+        padding: 0 1rem;
+
+        li:nth-child(1) {
             display: flex;
-            min-width: 0px;
-            flex-shrink: 0;
             align-items: center;
-        }
-        .hamburger {
-            margin-right: 0.5rem;
-            color: rgb(156, 163, 175);
-            &:hover {
-                cursor: pointer;
-                color: var(--color-primary);
+            gap: 0.5rem;
+
+            button {
+                display: none;
+                color: rgb(156, 163, 175);
+
+                &:hover {
+                    cursor: pointer;
+                    color: var(--color-primary);
+                }
+            }
+
+            img {
+                height: 2.5rem;
+                object-fit: contain;
+            }
+
+            svg {
                 width: 1.5rem;
+                height: 1.5rem;
+                stroke-width: 2;
+                stroke: currentColor;
             }
         }
-        .logo {
-            height: 2.5rem;
-            object-fit: contain;
-        }
-        .normal-menu {
-            display: flex;
+
+        li:nth-child(2) {
+            display: block;
+
             a {
+                margin-left: 1rem;
                 padding-left: 0.75rem;
                 padding-right: 0.75rem;
                 padding-top: 0.5rem;
@@ -52,42 +63,49 @@ nav {
                 line-height: 1.25rem;
                 font-weight: 500;
                 color: rgb(209, 213, 219);
+
                 &:hover {
                     color: var(--color-primary);
                 }
             }
         }
-        .profile-picture {
-            height: 2rem;
-            border-radius: 100%;
-            object-fit: contain;
-        }
-        .dropdown-menu {
-            position: absolute;
-            right: 0px;
-            z-index: 10;
-            margin-top: 0.5rem;
-            width: 12rem;
-            border-radius: 0.375rem;
-            background-color: rgb(255, 255, 255);
-            padding-top: 0.25rem;
-            padding-bottom: 0.25rem;
-            box-shadow: 0 0 0 0px #fff,
-                0 0 0 calc(1px + 0px) rgb(59, 130, 246, 0.5), 0 0 #0000;
-            a {
-                display: block;
-                padding-left: 1rem;
-                padding-right: 1rem;
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-                font-size: 0.875rem;
-                line-height: 1.25rem;
-            }
-        }
-        .login-register-btns {
+
+        li:nth-child(3) {
             display: flex;
             flex-shrink: 0;
             gap: 0.5rem;
+
+            button {
+                img {
+                    height: 2rem;
+                    border-radius: 100%;
+                    object-fit: contain;
+                }
+
+                div {
+                    position: absolute;
+                    right: 0px;
+                    z-index: 10;
+                    margin-top: 0.5rem;
+                    width: 12rem;
+                    border-radius: 0.375rem;
+                    background-color: rgb(255, 255, 255);
+                    padding-top: 0.25rem;
+                    padding-bottom: 0.25rem;
+                    box-shadow: 0 0 0 0px #fff,
+                        0 0 0 calc(1px + 0px) rgb(59, 130, 246, 0.5), 0 0 #0000;
+
+                    a {
+                        display: block;
+                        padding-left: 1rem;
+                        padding-right: 1rem;
+                        padding-top: 0.5rem;
+                        padding-bottom: 0.5rem;
+                        font-size: 0.875rem;
+                        line-height: 1.25rem;
+                    }
+                }
+            }
         }
     }
 }
@@ -109,6 +127,7 @@ nav {
 .button-green {
     background-color: rgb(20, 184, 166);
     color: rgb(255, 255, 255);
+
     &:hover {
         background-color: rgb(20, 184, 166, 0.8);
     }
@@ -117,7 +136,24 @@ nav {
 .button-white {
     background-color: var(--color-primary);
     color: rgb(0, 0, 0);
+
     &:hover {
         background-color: rgba(237, 236, 221, 0.8);
+    }
+}
+
+@media screen and (max-width: 720px) {
+    header {
+        nav {
+            li:nth-child(1) {
+                button {
+                    display: block;
+                }
+            }
+
+            li:nth-child(2) {
+                display: none;
+            }
+        }
     }
 }

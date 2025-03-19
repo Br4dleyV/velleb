@@ -61,56 +61,52 @@ export default function App() {
   };
 
   return <>
-    <nav>
-      <div className="nav-container">
-        <div className="logo-hamburger">
-          {/* Hamburger Button */}
-          <button type="button" className="hamburger sm:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-            <motion.svg className="size-6" strokeWidth="1.5" stroke="currentColor" key={menuOpen ? "close" : "menu"} initial={{ opacity: 0, rotate: -90, scale: 0.8 }} animate={{ opacity: 1, rotate: 0, scale: 1 }}>
-              {/* If menu is open show X icon, otherwise show hamburger icon */}
+    <header>
+      <nav>
+        <li>
+          {/* Hamburger Button & Logo */}
+          <button type="button" onClick={() => setMenuOpen(!menuOpen)}>
+            <motion.svg key={menuOpen ? "close" : "menu"} initial={{ opacity: 0, rotate: -90, scale: 0.8 }} animate={{ opacity: 1, rotate: 0, scale: 1 }}>
               {menuOpen ? (<motion.path d="M6 18L18 6M6 6l12 12" />) : (<motion.path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />)}
             </motion.svg>
           </button>
-          {/* Height max of parent container */}
-          <img className="logo" src="/BV.png" alt="BradleyV" />
-        </div>
-        {/* Normal Menu (hidden when on smaller screens) */}
-        <div className="hidden sm:block">
-          <div className="normal-menu space-x-4">
-            <a href="#">Dashboard</a>
-            <a href="#">Team</a>
-            <a href="#">Projects</a>
-            <a href="#">Calendar</a>
-          </div>
-        </div>
+          <img src="/BV.png" alt="BradleyV" />
+        </li>
+
+        {/* Normal Nav Bar */}
+        <li>
+          <a href="#">Dashboard</a>
+          <a href="#">Team</a>
+          <a href="#">Projects</a>
+          <a href="#">Calendar</a>
+        </li>
+
         {/* Profile Dropdown */}
-        <div>
-          {/* If user is logged in, show /BV.png, else show Login/register button */}
+        <li>
           {user ? (
-            <div className="relative ml-3">
-              <button className="flex" onClick={() => setProfileOpen(!profileOpen)} type="button" ref={profileMenuRef}>
+            <>
+              <button onClick={() => setProfileOpen(!profileOpen)} type="button" ref={profileMenuRef}>
                 {/* Profile Image */}
-                <img className="profile-picture" src={profilePictureUrl} alt="Profile Image" />
+                <img src={profilePictureUrl} alt="Profile Image" />
+                {profileOpen && (
+                  <motion.div initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
+                    <a href="#">Your Profile</a>
+                    <a href="#">Settings</a>
+                    <a href="#" onClick={handleLogout}>Sign out</a>
+                  </motion.div>
+                )}
               </button>
-              {/* Profile dropdown with Framer Motion animation */}
-              {profileOpen && (
-                <motion.div className="dropdown-menu" initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
-                  <a href="#">Your Profile</a>
-                  <a href="#">Settings</a>
-                  <a href="#" onClick={handleLogout}>Sign out</a>
-                </motion.div>
-              )}
-            </div>
+            </>
           ) : (
-            <div className="login-register-btns sm:space-x-2 sm:flex-nowrap">
+            <>
               <a className="button button-green" href="/login">Login</a>
               <a className="button button-white" href="/register">Register</a>
-            </div>
+            </>
           )}
-        </div>
-      </div>
+        </li>
+      </nav>
 
-      {/* Mobile menu with Framer Motion animation */}
+      {/* Mobile Nav Bar */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div className="sm:hidden overflow-hidden" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}> {/* Add overflow-hidden to prevent content from being visible during animation*/}
@@ -123,7 +119,7 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
 
     {/* Router */}
     <main className="p-4">
