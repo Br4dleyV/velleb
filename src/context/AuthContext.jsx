@@ -71,6 +71,18 @@ export function AuthProvider({ children }) {
             throw error;
         }
     };
+
+    // Function to reset the user password
+    async function resetpassword(email) {
+        try {
+            // Request a password reset
+            await account.createRecovery(email, "https://velleb.com/update-password");
+            return true;
+        } catch (error) {
+            console.error("Password reset failed:", error.message);
+            throw error;
+        }
+    };
     
     // Value to pass to the context requests
     const value = {
@@ -79,6 +91,7 @@ export function AuthProvider({ children }) {
         login,
         logout,
         register,
+        resetpassword,
     };
 
     return (
