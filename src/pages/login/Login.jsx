@@ -4,26 +4,28 @@ import { useAuth } from "../../context/AuthContext";
 import './Login.css'
 
 export default function Login() {
-    const { user, login } = useAuth(); // Access user and login function from AuthContext
+    // Request user and login function from AuthContext
+    const { user, login } = useAuth();
 
-    // Check if user is already logged in
+    // If user is already logged in, redirect to home
     useEffect(() => {
         if (user) {
             window.location.href = "/";
         }
     }, [user]);
 
-    // Logs in the user by creating a session
+    // Log in the user
     async function handleLogin(e) {
         e.preventDefault();
 
         // Collect form data
         const [email, password] = e.target.elements;
         try {
-            await login(email.value, password.value); // Use the login function from AuthContext
-            window.location.href = "/"; // Redirect to home after successful login
+            // Log in user and redirect to home page
+            await login(email.value, password.value);
+            window.location.href = "/"; 
         } catch (error) {
-            console.error("Login failed:", error.message); // Log error if login fails
+            console.error("Login failed:", error.message);
         }
     }
 
@@ -43,9 +45,7 @@ export default function Login() {
             <button type="submit" className="button button-green">Sign in</button>
         </form>
 
-        <p>
-            Don't have an account yet? {' '}
-            <Link to="/register">Register here</Link>
+        <p>Don't have an account yet? {' '} <Link to="/register">Register here</Link>
         </p>
     </main>
 }

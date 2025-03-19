@@ -13,16 +13,16 @@ body {
     font-family: system-ui, sans-serif;
 }
 
-/*                               */
-/* Container for all other pages */
-/*                               */
+/*                         */
+/* Container for all pages */
+/*                         */
 main {
     padding: 1rem;
 }
 
-/*                        */
-/* Default button styling */
-/*                        */
+/*                */
+/* Button styling */
+/*                */
 .button {
     cursor: pointer;
     white-space: nowrap;
@@ -36,10 +36,6 @@ main {
     font-weight: 500;
     box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0, 0, 0, 0.05);
 }
-
-/*                */
-/* Button styling */
-/*                */
 .button-green {
     background-color: rgb(20, 184, 166);
     color: rgb(255, 255, 255);
@@ -48,7 +44,6 @@ main {
         background-color: rgb(20, 184, 166, 0.8);
     }
 }
-
 .button-white {
     background-color: var(--color-primary);
     color: rgb(0, 0, 0);
