@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useAlert } from "../../context/AlertContext";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
@@ -8,8 +9,9 @@ export default function UpdatePassword() {
     // Hook to navigate between routes
     let navigate = useNavigate();
 
-    // Request updatepassword function from AuthContext
+    // Request updatepassword and triggerAlert function from AuthContext & AlertContext
     const { updatepassword } = useAuth();
+    const { triggerAlert } = useAlert();
 
     // Get the user ID and secret from the URL
     const [searchParams] = useSearchParams();
@@ -27,6 +29,7 @@ export default function UpdatePassword() {
             await updatepassword(userId, secret, newPassword.value);
             navigate("/");
         } catch (error) {
+            triggerAlert("Update Failed!", "error", error.message);
             console.error("Update failed:", error.message);
         }
     }
