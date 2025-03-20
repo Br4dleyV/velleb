@@ -78,3 +78,11 @@
         transform: scale(0.9);
     }
 }
+
+@media screen and (max-width: 720px) {
+    .alert {
+        div {
+            width: 90%;
+        }
+    }
+}
