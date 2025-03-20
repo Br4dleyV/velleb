@@ -23,13 +23,13 @@ export function AuthProvider({ children }) {
             try {
                 // Get the user details if logged in
                 const user = await account.get();
-                setUser(user); 
+                setUser(user);
             } catch (error) {
                 // Set null if not logged in
-                setUser(null); 
+                setUser(null);
             } finally {
                 // Set loading to false after checking the user
-                setLoading(false); 
+                setLoading(false);
             }
         };
 
@@ -55,8 +55,8 @@ export function AuthProvider({ children }) {
         try {
             // Delete the current session
             await account.deleteSession("current");
-            setUser(null); 
-            navigate("/login"); 
+            setUser(null);
+            navigate("/login");
         } catch (error) {
             console.error("Logout failed:", error.message);
             throw error;
@@ -99,6 +99,29 @@ export function AuthProvider({ children }) {
             throw error;
         }
     };
+
+    // Function to get the user preferences
+    async function getPref() {
+        try {
+            const pref = await account.getPrefs();
+            return pref;
+        } catch (error) {
+            console.error("Get pref failed:", error.message);
+            throw error;
+        }
+    }
+
+    // Function to update the user preferences
+    async function updatePref(pref) {
+        try {
+            await account.updatePrefs(pref);
+            return true;
+        } catch (error) {
+            console.error("Update pref failed:", error.message);
+            throw error;
+        }
+    }
+
     // Value to pass to the context requests
     const value = {
         user,
@@ -108,6 +131,8 @@ export function AuthProvider({ children }) {
         register,
         resetpassword,
         updatepassword,
+        getPref,
+        updatePref
     };
 
     return (

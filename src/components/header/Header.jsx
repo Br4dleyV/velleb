@@ -28,7 +28,7 @@ function useClickOutside(ref, initialState) {
 
 export default function Header() {
     // Request user and logout function from AuthContext
-    const { user, logout } = useAuth();
+    const { user, logout, getPref, updatePref } = useAuth();
 
     // State to track menu and profile dropdown state
     const [menuOpen, setMenuOpen] = useState(false);
@@ -36,16 +36,18 @@ export default function Header() {
     const [profileOpen, setProfileOpen] = useClickOutside(profileMenuRef, false);
     const [profilePictureUrl, setProfilePictureUrl] = useState(null);
     const [theme, setTheme] = useState(() => {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            return savedTheme;
+        const preferredTheme = getPref().theme;
+        if (preferredTheme) {
+            return preferredTheme;
         }
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        updatePref({ theme: prefersDark ? 'dark' : 'light' });
         return prefersDark ? 'dark' : 'light';
     });
 
     function toggleTheme() {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+        updatePref({ theme: theme === 'light' ? 'dark' : 'light' });
     };
 
     useEffect(() => {
@@ -66,7 +68,6 @@ export default function Header() {
 
         // Set the theme and save it to local storage
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
         // Get the user's profile picture
         getProfilePicture();
         // Add event listeners
