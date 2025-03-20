@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useAlert } from "../../context/AlertContext";
 import { useAuth } from "../../context/AuthContext";
 import './styles.css'
 
@@ -7,8 +8,9 @@ export default function ResetPassword() {
     // Hook to navigate between routes
     let navigate = useNavigate();
 
-    // Request resetpassword function from AuthContext
+    // Request resetpassword and triggerAlert function from AuthContext & AlertContext
     const { resetpassword } = useAuth();
+    const { triggerAlert } = useAlert();
 
     // Reset the user password
     async function handleReset(e) {
@@ -21,6 +23,7 @@ export default function ResetPassword() {
             await resetpassword(email.value);
             navigate("/");
         } catch (error) {
+            triggerAlert("Reset Failed!", "error", error.message);
             console.error("Reset failed:", error.message);
         }
     }

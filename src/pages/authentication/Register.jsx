@@ -11,7 +11,7 @@ export default function Register() {
 
     // Request user and register and triggerAlert function from AuthContext & AlertContext
     const { user, register } = useAuth();
-    const { triggerAlert } = useAlert(); // Use the triggerAlert function
+    const { triggerAlert } = useAlert();
 
     // If user is already logged in, redirect to home
     useEffect(() => {
