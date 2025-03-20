@@ -1,25 +1,21 @@
 :root {
     --color-primary: #edecdd;
-    --color-primary-hover: #9ca3af;
-    --color-secondary: #5ca2be;
-    --color-tertiary: #615de8;
-    --color-quaternary: #854e72;
-    --color-quinary: #181b29;
-    --color-quinary-hover: #424a6d;
+    --color-primary-hover: #b4b3a6;
+    --color-secondary: #181b29;
+    --color-secondary-hover: #424a6d;
     --background-color: #edecdd;
-    --text-color: #000000;
+    --text-color: #000;
+    --text-color-hover: #505a84;
 }
 
 [data-theme='dark'] {
     --color-primary: #edecdd;
-    --color-primary-hover: #424a6d;
-    --color-secondary: #5ca2be;
-    --color-tertiary: #615de8;
-    --color-quaternary: #854e72;
-    --color-quinary: #181b29;
-    --color-quinary-hover: #9ca3af;
+    --color-primary-hover: #b4b3a6;
+    --color-secondary: #181b29;
+    --color-secondary-hover: #9ca3af;
     --background-color: #10121e;
     --text-color: #edecdd;
+    --text-color-hover: #9ca3af;
 }
 
 body {
@@ -51,6 +47,7 @@ main {
     font-weight: 500;
     box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0, 0, 0, 0.05);
 }
+
 .button-green {
     background-color: rgb(20, 184, 166);
     color: rgb(255, 255, 255);
@@ -59,6 +56,7 @@ main {
         background-color: rgb(20, 184, 166, 0.8);
     }
 }
+
 .button-white {
     background-color: var(--color-primary);
     color: rgb(0, 0, 0);

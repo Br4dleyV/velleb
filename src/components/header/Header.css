@@ -1,5 +1,5 @@
 header {
-    background-color: var(--color-quinary);
+    background-color: var(--color-secondary);
 
     nav ul {
         display: flex;
@@ -76,10 +76,10 @@ header {
                     a {
                         padding: 0.5rem 1rem;
                         font-size: 0.875rem;
-                        color: var(--color-quinary);
+                        color: var(--color-secondary);
 
                         &:hover {
-                            color: var(--color-quinary-hover);
+                            color: var(--color-secondary-hover);
                         }
                     }
                 }
