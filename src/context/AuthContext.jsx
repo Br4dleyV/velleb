@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { account } from "../config/Appwrite";
 
 const AuthContext = createContext();
@@ -9,8 +10,11 @@ export function useAuth() {
 };
 
 export function AuthProvider({ children }) {
+    // Hook to navigate between routes
+    let navigate = useNavigate();
+
     // State to hold the authenticated user and loading status
-    const [user, setUser] = useState(null); 
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     // Check if the user is logged in on component mount
@@ -52,7 +56,7 @@ export function AuthProvider({ children }) {
             // Delete the current session
             await account.deleteSession("current");
             setUser(null); 
-            window.location.href = "/login"; 
+            navigate("/login"); 
         } catch (error) {
             console.error("Logout failed:", error.message);
             throw error;
@@ -95,7 +99,6 @@ export function AuthProvider({ children }) {
             throw error;
         }
     };
-    
     // Value to pass to the context requests
     const value = {
         user,

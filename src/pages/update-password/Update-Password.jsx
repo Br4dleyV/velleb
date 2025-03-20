@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import './Update-Password.css'
 
 export default function UpdatePassword() {
+    // Hook to navigate between routes
+    let navigate = useNavigate();
+
     // Request updatepassword function from AuthContext
     const { updatepassword } = useAuth();
 
@@ -21,7 +25,7 @@ export default function UpdatePassword() {
         try {
             // Update the user password and redirect to home
             await updatepassword(userId, secret, newPassword.value);
-            window.location.href = "/";
+            navigate("/");
         } catch (error) {
             console.error("Update failed:", error.message);
         }

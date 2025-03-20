@@ -93,10 +93,10 @@ export default function Header() {
 
                     {/* Normal Nav Bar */}
                     <li>
-                        <a href="#">Dashboard</a>
-                        <a href="#">Team</a>
-                        <a href="#">Projects</a>
-                        <a href="#">Calendar</a>
+                        <Link to="/">Dashboard</Link>
+                        <Link to="/team">Team</Link>
+                        <Link to="/projects">Projects</Link>
+                        <Link to="/calendar">Calendar</Link>
                     </li>
 
                     {/* Profile Dropdown / Login-Register */}
@@ -114,8 +114,8 @@ export default function Header() {
                                                 exit={{ opacity: 0, translateY: -10 }}
                                                 onClick={(e) => e.stopPropagation()} // Prevents event bubbling
                                             >
-                                                <a href="#">Your Profile</a>
-                                                <a href="#">Settings</a>
+                                                <Link to="/profile">Your Profile</Link>
+                                                <Link to="/settings">Settings</Link>
                                                 <a href="#" onClick={logout}>Sign out</a>
                                             </motion.div>
                                         )}
@@ -124,8 +124,8 @@ export default function Header() {
                             </>
                         ) : (
                             <>
-                                <a className="button button-green" href="/login">Login</a>
-                                <a className="button button-white" href="/register">Register</a>
+                                <Link to="/login" className="button button-green">Login</Link>
+                                <Link to="/register" className="button button-white">Register</Link>
                             </>
                         )}
                     </li>
@@ -136,10 +136,10 @@ export default function Header() {
                     {menuOpen && (
                         <motion.nav initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}>
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.15 } }} exit={{ opacity: 0 }}>
-                                <a href="#">Dashboard</a>
-                                <a href="#">Team</a>
-                                <a href="#">Projects</a>
-                                <a href="#">Calendar</a>
+                                <Link to="/">Dashboard</Link>
+                                <Link to="/team">Team</Link>
+                                <Link to="/projects">Projects</Link>
+                                <Link to="/calendar">Calendar</Link>
                             </motion.div>
                         </motion.nav>
                     )}

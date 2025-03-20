@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import './Reset-Password.css'
 
 export default function ResetPassword() {
+    // Hook to navigate between routes
+    let navigate = useNavigate();
+
     // Request resetpassword function from AuthContext
     const { resetpassword } = useAuth();
 
@@ -16,7 +20,7 @@ export default function ResetPassword() {
         try {
             // Send reset link and redirect to home page
             await resetpassword(email.value);
-            window.location.href = "/";
+            navigate("/");
         } catch (error) {
             console.error("Reset failed:", error.message);
         }

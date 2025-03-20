@@ -1,16 +1,20 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import './Register.css'
 
 export default function Register() {
+    // Hook to navigate between routes
+    let navigate = useNavigate();
+
     // Request user and register function from AuthContext
     const { user, register } = useAuth();
 
     // If user is already logged in, redirect to home
     useEffect(() => {
         if (user) {
-            window.location.href = "/";
+            navigate("/");
         }
     }, [user]);
 
@@ -23,7 +27,7 @@ export default function Register() {
         try {
             // Register user and redirect to home page
             await register(email.value, password.value, name.value);
-            window.location.href = "/";
+            navigate("/");
         } catch (error) {
             console.error("Registration failed:", error.message);
         }

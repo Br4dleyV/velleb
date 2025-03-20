@@ -1,16 +1,20 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import './Login.css'
 
 export default function Login() {
+    // Hook to navigate between routes
+    let navigate = useNavigate();
+
     // Request user and login function from AuthContext
     const { user, login } = useAuth();
 
     // If user is already logged in, redirect to home
     useEffect(() => {
         if (user) {
-            window.location.href = "/";
+            navigate("/");
         }
     }, [user]);
 
@@ -23,7 +27,7 @@ export default function Login() {
         try {
             // Log in user and redirect to home page
             await login(email.value, password.value);
-            window.location.href = "/"; 
+            navigate("/");
         } catch (error) {
             console.error("Login failed:", error.message);
         }
