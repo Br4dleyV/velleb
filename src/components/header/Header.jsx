@@ -5,16 +5,35 @@ import { useAuth } from "../../context/AuthContext";
 import ThemeToggleButton from "../themeToggleButton/ThemeToggleButton";
 import './Header.css';
 
+// Custom hook to detect clicks outside a specified element
+function useClickOutside(ref, initialState) {
+    const [isComponentVisible, setIsComponentVisible] = useState(initialState);
+
+    const handleClickOutside = (event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
+            setIsComponentVisible(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    return [isComponentVisible, setIsComponentVisible];
+}
+
 export default function Header() {
     // Request user and logout function from AuthContext
     const { user, logout } = useAuth();
 
     // State to track menu and profile dropdown state
     const [menuOpen, setMenuOpen] = useState(false);
-    const [profileOpen, setProfileOpen] = useState(false);
-    const [profilePictureUrl, setProfilePictureUrl] = useState(null);
     const profileMenuRef = useRef(null);
-    const profileDropdownRef = useRef(null);
+    const [profileOpen, setProfileOpen] = useClickOutside(profileMenuRef, false);
+    const [profilePictureUrl, setProfilePictureUrl] = useState(null);
     const [theme, setTheme] = useState(() => {
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -36,13 +55,6 @@ export default function Header() {
             }
         }
 
-        // Close the profile dropdown when clicking outside
-        function handleClickOutside(e) {
-            if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target) && !profileMenuRef.current.contains(e.target)) {
-                setProfileOpen(false);
-            }
-        }
-
         // Get the user's profile picture
         function getProfilePicture() {
             if (user) {
@@ -57,11 +69,9 @@ export default function Header() {
         // Get the user's profile picture
         getProfilePicture();
         // Add event listeners
-        document.addEventListener("mousedown", handleClickOutside);
         window.addEventListener("resize", handleResize);
 
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
             window.removeEventListener("resize", handleResize);
         };
     }, [user, theme]);
@@ -95,13 +105,20 @@ export default function Header() {
                                 <ThemeToggleButton theme={theme} toggleTheme={toggleTheme} />
                                 <button onClick={() => setProfileOpen(!profileOpen)} type="button" ref={profileMenuRef}>
                                     <img src={profilePictureUrl} alt="Profile Image" />
-                                    {profileOpen && (
-                                        <motion.div initial={{ opacity: 0, translateY: -10 }} animate={{ opacity: 1, translateY: 0 }} ref={profileDropdownRef}>
-                                            <a href="#">Your Profile</a>
-                                            <a href="#">Settings</a>
-                                            <a href="#" onClick={logout}>Sign out</a>
-                                        </motion.div>
-                                    )}
+                                    <AnimatePresence>
+                                        {profileOpen && (
+                                            <motion.div
+                                                initial={{ opacity: 0, translateY: -10 }}
+                                                animate={{ opacity: 1, translateY: 0 }}
+                                                exit={{ opacity: 0, translateY: -10 }}
+                                                onClick={(e) => e.stopPropagation()} // Prevents event bubbling
+                                            >
+                                                <a href="#">Your Profile</a>
+                                                <a href="#">Settings</a>
+                                                <a href="#" onClick={logout}>Sign out</a>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
                                 </button>
                             </>
                         ) : (
