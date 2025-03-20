@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useAlert } from "../../context/AlertContext";
 import { useAuth } from "../../context/AuthContext";
 import './styles.css'
 
@@ -8,8 +9,9 @@ export default function Register() {
     // Hook to navigate between routes
     let navigate = useNavigate();
 
-    // Request user and register function from AuthContext
+    // Request user and register and triggerAlert function from AuthContext & AlertContext
     const { user, register } = useAuth();
+    const { triggerAlert } = useAlert(); // Use the triggerAlert function
 
     // If user is already logged in, redirect to home
     useEffect(() => {
@@ -29,6 +31,7 @@ export default function Register() {
             await register(email.value, password.value, name.value);
             navigate("/");
         } catch (error) {
+            triggerAlert("Registration Failed!", "error", error.message);
             console.error("Registration failed:", error.message);
         }
     }
