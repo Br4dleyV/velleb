@@ -101,9 +101,9 @@ export default function Header() {
 
                     {/* Profile Dropdown / Login-Register */}
                     <li>
+                        <ThemeToggleButton theme={theme} toggleTheme={toggleTheme} />
                         {user ? (
                             <>
-                                <ThemeToggleButton theme={theme} toggleTheme={toggleTheme} />
                                 <button onClick={() => setProfileOpen(!profileOpen)} type="button" ref={profileMenuRef}>
                                     <img src={profilePictureUrl} alt="Profile Image" />
                                     <AnimatePresence>
