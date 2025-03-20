@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useAlert } from "../../context/AlertContext";
 import { useAuth } from "../../context/AuthContext";
 import './styles.css'
 
@@ -8,8 +9,9 @@ export default function Login() {
     // Hook to navigate between routes
     let navigate = useNavigate();
 
-    // Request user and login function from AuthContext
+    // Request user and login and triggerAlert function from AuthContext & AlertContext
     const { user, login } = useAuth();
+    const { triggerAlert } = useAlert(); // Use the triggerAlert function
 
     // If user is already logged in, redirect to home
     useEffect(() => {
@@ -29,6 +31,7 @@ export default function Login() {
             await login(email.value, password.value);
             navigate("/");
         } catch (error) {
+            triggerAlert("Login Failed!", "error", error.message);
             console.error("Login failed:", error.message);
         }
     }
