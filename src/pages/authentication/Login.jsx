@@ -49,7 +49,7 @@ export default function Login() {
             </aside>
             <input type="password" name="password" id="password" autoComplete="current-password" required />
 
-            <button type="submit" className="button button-green">Sign in</button>
+            <button type="submit" className="button button-success">Sign in</button>
         </form>
 
         <p>Don't have an account yet? {' '} <Link to="/register">Register here</Link>

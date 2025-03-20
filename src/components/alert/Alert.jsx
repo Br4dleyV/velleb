@@ -34,7 +34,7 @@ export default function Alert({ message, type = "info", onClose, title }) {
             >
                 <h3>{title}</h3>
                 <p>{message}</p>
-                <button className="button button-green" onClick={handleClose}>Close</button>
+                <button className={`button button-${type}`} onClick={handleClose}>Close</button>
             </div>
         </div>
     );

@@ -41,7 +41,7 @@ export default function UpdatePassword() {
             <label htmlFor="password">New Password</label>
             <input type="password" name="password" id="password" autoComplete="password" required />
 
-            <button type="submit" className="button button-green">Update Password</button>
+            <button type="submit" className="button button-success">Update Password</button>
         </form>
 
         <p>Changed your mind? {' '} <Link to="/">Go to home</Link>

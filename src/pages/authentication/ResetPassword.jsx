@@ -35,7 +35,7 @@ export default function ResetPassword() {
             <label htmlFor="email">Email address</label>
             <input type="email" name="email" id="email" autoComplete="email" required />
 
-            <button type="submit" className="button button-green">Send Reset Link</button>
+            <button type="submit" className="button button-success">Send Reset Link</button>
         </form>
 
         <p>Changed your mind? {' '} <Link to="/">Go to home</Link>

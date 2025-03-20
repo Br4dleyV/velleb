@@ -143,7 +143,7 @@ export default function Header() {
                             </>
                         ) : (
                             <>
-                                <Link to="/login" className="button button-green">Login</Link>
+                                <Link to="/login" className="button button-success">Login</Link>
                                 <Link to="/register" className="button button-white">Register</Link>
                             </>
                         )}

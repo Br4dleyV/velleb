@@ -45,7 +45,7 @@ main {
     box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0, 0, 0, 0.05);
 }
 
-.button-green {
+.button-success {
     background-color: rgb(20, 184, 166);
     color: rgb(255, 255, 255);
 
@@ -60,5 +60,32 @@ main {
 
     &:hover {
         background-color: rgba(237, 236, 221, 0.8);
+    }
+}
+
+.button-error {
+    background-color: #dc3545;
+    color: rgb(255, 255, 255);
+
+    &:hover {
+        background-color: #b42c3a;
+    }
+}
+
+.button-warning {
+    background-color: #ffc107;
+    color: rgb(0, 0, 0);
+
+    &:hover {
+        background-color: #d39e00;
+    }
+}
+
+.button-info {
+    background-color: #17a2b8;
+    color: rgb(255, 255, 255);
+
+    &:hover {
+        background-color: #0f6674;
     }
 }

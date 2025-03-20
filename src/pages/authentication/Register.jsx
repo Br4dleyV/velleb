@@ -49,7 +49,7 @@ export default function Register() {
             <label htmlFor="password">Password</label>
             <input type="password" name="password" id="password" autoComplete="new-password" required />
 
-            <button type="submit" className="button button-green">Sign up</button>
+            <button type="submit" className="button button-success">Sign up</button>
         </form>
 
         <p>Already have an account? {' '} <Link to="/login">Log in here</Link></p>
