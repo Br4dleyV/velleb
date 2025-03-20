@@ -41,7 +41,6 @@ export default function Header() {
             return preferredTheme;
         }
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        updatePref({ theme: prefersDark ? 'dark' : 'light' });
         return prefersDark ? 'dark' : 'light';
     });
 
