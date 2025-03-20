@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { avatars } from "../../config/Appwrite";
 import { useAuth } from "../../context/AuthContext";
 import ThemeToggleButton from "../themeToggleButton/ThemeToggleButton";
@@ -87,7 +88,7 @@ export default function Header() {
                                 {menuOpen ? (<motion.path d="M6 18L18 6M6 6l12 12" />) : (<motion.path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />)}
                             </motion.svg>
                         </button>
-                        <a href="/"><img src="/BV.png" alt="BradleyV" /></a>
+                        <Link to="/"><img src="/BV.png" alt="BradleyV" /></Link>
                     </li>
 
                     {/* Normal Nav Bar */}
