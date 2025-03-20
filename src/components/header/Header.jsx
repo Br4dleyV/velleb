@@ -28,7 +28,7 @@ function useClickOutside(ref, initialState) {
 
 export default function Header() {
     // Request user and logout function from AuthContext
-    const { user, logout, getPref, updatePref } = useAuth();
+    const { user, logout, updatePref } = useAuth();
 
     // State to track menu and profile dropdown state
     const [menuOpen, setMenuOpen] = useState(false);
@@ -36,17 +36,41 @@ export default function Header() {
     const [profileOpen, setProfileOpen] = useClickOutside(profileMenuRef, false);
     const [profilePictureUrl, setProfilePictureUrl] = useState(null);
     const [theme, setTheme] = useState(() => {
-        const preferredTheme = getPref().theme;
-        if (preferredTheme) {
-            return preferredTheme;
+        // If user is logged in, get theme from user preferences
+        if (user && user.prefs.theme) {
+            if (user.prefs.theme) {
+                console.log(user.prefs.theme);
+                return user.prefs.theme;
+            }
+            return user.prefs.theme || 'light';
+        } 
+
+        // Else get theme from local storage
+        if (localStorage.getItem('theme')) {
+            return localStorage.getItem('theme');
         }
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        return prefersDark ? 'dark' : 'light';
+
+        // Else get theme from system preference
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            localStorage.setItem('theme', 'dark');
+            return 'dark';
+        }
+        // Default to light theme
+        localStorage.setItem('theme', 'light');
+        return 'light';
+
+        // If user is not logged in, get theme from localstorage, else system preference
+        const localTheme = localStorage.getItem('theme');
+        return localTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     });
 
     function toggleTheme() {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-        updatePref({ theme: theme === 'light' ? 'dark' : 'light' });
+        localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light');
+        if (user) {
+            user.prefs.theme = theme === 'light' ? 'dark' : 'light';
+            updatePref(user.prefs);
+        }
     };
 
     useEffect(() => {
