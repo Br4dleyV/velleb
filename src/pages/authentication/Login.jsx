@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import './Login.css'
+import './styles.css'
 
 export default function Login() {
     // Hook to navigate between routes
@@ -33,7 +33,7 @@ export default function Login() {
         }
     }
 
-    return <main className="login">
+    return <main className="auth-container">
         <h2>Sign in to your account</h2>
 
         <form onSubmit={handleLogin}>

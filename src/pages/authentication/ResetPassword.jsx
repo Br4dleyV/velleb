@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import './Reset-Password.css'
+import './styles.css'
 
 export default function ResetPassword() {
     // Hook to navigate between routes
@@ -26,7 +25,7 @@ export default function ResetPassword() {
         }
     }
 
-    return <main className="reset-password">
+    return <main className="auth-container">
         <h2>Reset Password</h2>
 
         <form onSubmit={handleReset}>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import './Update-Password.css'
+import './styles.css'
 
 export default function UpdatePassword() {
     // Hook to navigate between routes
@@ -31,7 +31,7 @@ export default function UpdatePassword() {
         }
     }
 
-    return <main className="update-password">
+    return <main className="auth-container">
         <h2>Update Password</h2>
 
         <form onSubmit={handleUpdate}>

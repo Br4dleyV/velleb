@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import './Register.css'
+import './styles.css'
 
 export default function Register() {
     // Hook to navigate between routes
@@ -33,7 +33,7 @@ export default function Register() {
         }
     }
 
-    return <main className="register">
+    return <main className="auth-container">
         <h2>Create an account</h2>
 
         <form onSubmit={handleRegister}>

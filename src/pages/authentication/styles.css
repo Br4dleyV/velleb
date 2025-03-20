@@ -1,4 +1,4 @@
-.update-password {
+.auth-container {
     display: flex;
     padding-top: 3rem;
     flex-direction: column;
@@ -8,7 +8,7 @@
         font-size: 1.5rem;
         letter-spacing: -0.025em;
         text-align: center;
-        color: var(--color-primary);
+        color: var(--text-color);
     }
 
     form {
@@ -18,7 +18,7 @@
     label {
         display: block;
         font-weight: 500;
-        color: var(--color-primary);
+        color: var(--text-color);
         margin-bottom: 0.5rem;
     }
 
@@ -30,12 +30,21 @@
         margin-bottom: 1rem;
     }
 
+    aside {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        a {
+            font-size: 0.8rem;
+        }
+    }
+
     a {
         font-weight: 600;
-        color: var(--color-primary);
+        color: var(--text-color);
 
         &:hover {
-            color: var(--color-primary-hover);
+            color: var(--text-color-hover);
         }
     }
 
@@ -46,7 +55,7 @@
     p {
         margin-top: 2rem;
         text-align: center;
-        color: #6B7280;
+        color: #6b7280;
     }
 }
 
@@ -54,7 +63,7 @@
 /* Media Queries */
 /*               */
 @media screen and (min-width: 721px) {
-    .update-password {
+    .auth-container {
         width: 30rem;
         margin: auto;
     }
