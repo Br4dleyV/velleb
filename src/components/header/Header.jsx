@@ -28,25 +28,22 @@ function useClickOutside(ref, initialState) {
 
 export default function Header() {
     // Request user and logout function from AuthContext
-    const { user, logout, getPref, updatePref } = useAuth();
+    const { user, logout, updatePref } = useAuth();
 
     // State to track menu and profile dropdown state
     const [menuOpen, setMenuOpen] = useState(false);
     const profileMenuRef = useRef(null);
     const [profileOpen, setProfileOpen] = useClickOutside(profileMenuRef, false);
     const [profilePictureUrl, setProfilePictureUrl] = useState(null);
-    const [theme, setTheme] = useState(() => {
-        const preferredTheme = getPref().theme;
-        if (preferredTheme) {
-            return preferredTheme;
-        }
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        return prefersDark ? 'dark' : 'light';
-    });
+    const [theme, setTheme] = useState(null);
 
     function toggleTheme() {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-        updatePref({ theme: theme === 'light' ? 'dark' : 'light' });
+        localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light');
+        if (user) {
+            user.prefs.theme = theme === 'light' ? 'dark' : 'light';
+            updatePref(user.prefs);
+        }
     };
 
     useEffect(() => {
@@ -65,10 +62,32 @@ export default function Header() {
             }
         }
 
+        function getTheme() {            // If user is logged in, get theme from user preferences
+            if (user && user.prefs.theme) {
+                return user.prefs.theme;
+            }
+
+            // Else get theme from local storage
+            if (localStorage.getItem('theme')) {
+                return localStorage.getItem('theme');
+            }
+
+            // Else get theme from system preference
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                localStorage.setItem('theme', 'dark');
+                return 'dark';
+            }
+            
+            // Default to light theme
+            localStorage.setItem('theme', 'light');
+            return 'light';
+        }
+
         // Set the theme and save it to local storage
         document.documentElement.setAttribute('data-theme', theme);
-        // Get the user's profile picture
+        // Get the user's profile picture and theme
         getProfilePicture();
+        setTheme(getTheme());
         // Add event listeners
         window.addEventListener("resize", handleResize);
 
@@ -127,7 +146,7 @@ export default function Header() {
                             </>
                         ) : (
                             <>
-                                <Link to="/login" className="button button-green">Login</Link>
+                                <Link to="/login" className="button button-success">Login</Link>
                                 <Link to="/register" className="button button-white">Register</Link>
                             </>
                         )}

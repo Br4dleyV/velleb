@@ -100,17 +100,6 @@ export function AuthProvider({ children }) {
         }
     };
 
-    // Function to get the user preferences
-    async function getPref() {
-        try {
-            const pref = await account.getPrefs();
-            return pref;
-        } catch (error) {
-            console.error("Get pref failed:", error.message);
-            throw error;
-        }
-    }
-
     // Function to update the user preferences
     async function updatePref(pref) {
         try {
@@ -131,7 +120,6 @@ export function AuthProvider({ children }) {
         register,
         resetpassword,
         updatepassword,
-        getPref,
         updatePref
     };
 
