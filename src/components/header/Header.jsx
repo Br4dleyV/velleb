@@ -116,7 +116,10 @@ export default function Header() {
                                             >
                                                 <Link to="/profile">Your Profile</Link>
                                                 <Link to="/settings">Settings</Link>
-                                                <a href="#" onClick={logout}>Sign out</a>
+                                                <a href="#" onClick={() => {
+                                                    logout();
+                                                    setProfileOpen(false);
+                                                }}>Sign out</a>
                                             </motion.div>
                                         )}
                                     </AnimatePresence>
