@@ -6,10 +6,10 @@ body {
     max-width: 50rem;
     margin: 0 auto;
     text-align: center;
+    line-height: 1.5;
 
     header {
         margin-top: 3rem;
-        width: 100%;
 
         h1 {
             font-weight: bold;
@@ -29,9 +29,9 @@ body {
             gap: 1rem;
 
             i {
-                text-decoration: none;
                 font-size: 2.5rem;
                 transition: transform 0.1s ease-in-out;
+
                 &:hover {
                     transform: scale(1.2);
                 }
@@ -41,8 +41,32 @@ body {
 
     main {
         margin: 2rem 0;
-        p {
-            line-height: 1.5;
+
+        #projects {
+            width: 60%;
+            margin: 0 auto;
+
+            h2 {
+                text-align: center;
+                font-size: 2rem;
+                margin: 2rem 0;
+                font-weight: bold;
+            }
+
+            li {
+                margin: 2rem 0;
+            }
+
+            a {
+                text-decoration: none;
+                color: blue;
+                font-weight: bold;
+                font-size: 1.5rem;
+
+                &:hover {
+                    color: #0000c8;
+                }
+            }
         }
     }
 
