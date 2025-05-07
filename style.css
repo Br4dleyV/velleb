@@ -59,12 +59,12 @@ body {
 
             a {
                 text-decoration: none;
-                color: blue;
+                color: rgb(83, 83, 255);
                 font-weight: bold;
                 font-size: 1.5rem;
 
                 &:hover {
-                    color: #0000c8;
+                    color: rgb(67, 67, 211);
                 }
             }
         }
